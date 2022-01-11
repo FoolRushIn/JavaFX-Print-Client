@@ -7,14 +7,18 @@ import com.javafx.printclient.stage.MainStage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import de.felixroske.jfxsupport.FXMLController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,8 +29,11 @@ import java.util.ResourceBundle;
  * @Date 2022/1/11 10:24
  * @Version 1.0
  **/
-@FXMLController
+@Component
 public class LoginController implements Initializable {
+
+    @FXML
+    AnchorPane vPaneToDrag;
 
     @FXML
     JFXTextField username;
@@ -43,7 +50,7 @@ public class LoginController implements Initializable {
     @FXML
     JFXButton btnClose;
 
-    @Resource
+    @Autowired
     private LoginService loginService;
 
     private MainApp mainApp;
@@ -60,8 +67,11 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initView();
         initEvent();
     }
+
+
 
     /**
      * 登录操作
@@ -89,8 +99,17 @@ public class LoginController implements Initializable {
 
         //成功 跳转到主界面
         alertInformation.setContentText("登录成功,即将跳转到主页面!");
+
+        //这个方法无法实现拖拽窗口
+//        openMainWindow();
+
         MainApp.hideWindow();
         MainApp.stage = new MainStage("fxml/main.fxml");
+    }
+
+    private void initView() {
+        //实现窗口拖拽
+        initDragAble(vPaneToDrag);
     }
 
     private void initEvent() {
@@ -108,5 +127,25 @@ public class LoginController implements Initializable {
             System.exit(0);
         });
 
+    }
+
+    private void openMainWindow() {
+        Stage mainStageWindow = new MainStage("fxml/main.fxml");
+        Window window = username.getScene().getWindow();
+        if (window instanceof Stage) {
+            ((Stage) window).close();
+        }
+        mainStageWindow.show();
+    }
+
+    /**
+     * @param nodeToDrag
+     * @return void
+     * @Author heziyuan
+     * @Description //拖动窗口
+     **/
+    private void initDragAble(Node nodeToDrag) {
+        nodeToDrag.setOnMousePressed(me -> MainApp.setXYOffset(me.getSceneX(), me.getSceneY()));
+        nodeToDrag.setOnMouseDragged(me -> MainApp.StageDraged(me.getScreenX(), me.getScreenY()));
     }
 }

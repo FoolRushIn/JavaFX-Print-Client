@@ -23,7 +23,7 @@ public class LoginServiceImpl implements LoginService {
     UserLoginMapper userLoginMapper;
 
     @Autowired
-    UserLogin   userLogin;
+    UserLogin userLogin;
 
     @Autowired
     ReturnData returnData;
@@ -34,7 +34,8 @@ public class LoginServiceImpl implements LoginService {
         try {
             userLogin.setUsername(username);
             userLogin.setPassword(password);
-            userLoginMapper.loginCheck(userLogin);
+//            userLoginMapper.loginCheck(userLogin);
+            userLoginMapper.query(username);
             returnData.setKey(ReturnKeyEnum.成功.toString());
         } catch (Exception e) {
             e.printStackTrace();

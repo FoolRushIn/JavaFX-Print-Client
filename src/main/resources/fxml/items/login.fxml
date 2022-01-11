@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.printclient.controller.LoginController">
+<AnchorPane fx:id="vPaneToDrag" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.printclient.controller.LoginController">
 
 
 
@@ -18,32 +18,32 @@
                 <Font size="18.0" />
             </font>
         </JFXButton>
-        <JFXPasswordField fx:id="password" layoutX="155.0" layoutY="111.0" promptText="请输入密码" style="-fx-background-color: #e5e5e5; -fx-border-radius: 0 0 0 0; -fx-background-radius: 0 0 0 0; -fx-fill: black;">
+        <JFXPasswordField fx:id="password" layoutX="131.0" layoutY="113.0" promptText="请输入密码" style="-fx-background-color: #e5e5e5; -fx-border-radius: 0 0 0 0; -fx-background-radius: 0 0 0 0; -fx-fill: black;">
             <font>
                 <Font size="14.0" />
             </font>
         </JFXPasswordField>
-        <JFXTextField fx:id="username" layoutX="155.0" layoutY="60.0" promptText="请输入用户名" style="-fx-background-color: #e5e5e5; -fx-border-radius: 0 0 0 0; -fx-background-radius: 0 0 0 0; -fx-fill: black;">
+        <JFXTextField fx:id="username" layoutX="131.0" layoutY="62.0" promptText="请输入用户名" style="-fx-background-color: #e5e5e5; -fx-border-radius: 0 0 0 0; -fx-background-radius: 0 0 0 0; -fx-fill: black;">
             <font>
                 <Font size="14.0" />
             </font>
         </JFXTextField>
-        <Label layoutX="80.0" layoutY="65.0" text="用户名">
+        <Label layoutX="56.0" layoutY="67.0" text="用户名">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label layoutX="80.0" layoutY="116.0" text="密   码">
+        <Label layoutX="56.0" layoutY="118.0" text="密   码">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <JFXButton fx:id="btnMin" layoutX="262.0" layoutY="24.0" mnemonicParsing="false" styleClass="minBtn" text="">
+        <JFXButton fx:id="btnMin" layoutX="262.0" layoutY="17.0" mnemonicParsing="false" styleClass="minBtn" text="">
             <graphic>
                 <MaterialDesignIconView glyphName="MINUS" size="1em" />
             </graphic>
         </JFXButton>
-        <JFXButton fx:id="btnClose" layoutX="298.0" layoutY="24.0" mnemonicParsing="false" styleClass="closeBtn" text="">
+        <JFXButton fx:id="btnClose" layoutX="298.0" layoutY="17.0" mnemonicParsing="false" styleClass="closeBtn" text="">
             <graphic>
                 <MaterialDesignIconView glyphName="WINDOW_CLOSE" size="1em" />
             </graphic>

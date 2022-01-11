@@ -3,10 +3,13 @@ package com.javafx.printclient;
 import com.javafx.printclient.stage.MainStage;
 import com.javafx.printclient.utils.ResizeHelper;
 import com.javafx.printclient.utils.StringUtils;
-import com.javafx.printclient.view.LoginView;
-import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
+import javafx.application.Application;
 import javafx.stage.Stage;
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * @ClassName MainApp
@@ -17,16 +20,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  **/
 
 @SpringBootApplication
-public class MainApp extends AbstractJavaFxApplicationSupport {
+public class MainApp extends Application {
 
     //主窗口
     public static Stage stage = null;
     private static double xOffset = 0;
     private static double yOffset = 0;
+    public static ConfigurableApplicationContext applicationContext;
 
 
     public static void main(String[] args) {
-        launch(MainApp.class, LoginView.class, args);
+        applicationContext = SpringApplication.run(MainApp.class, args);
+        Application.launch(args);
     }
 
     @Override
@@ -37,8 +42,6 @@ public class MainApp extends AbstractJavaFxApplicationSupport {
             stage.setAlwaysOnTop(Boolean.parseBoolean(StringUtils.readProperties()[1]));
         }
     }
-
-
 
     /**
      * 隐藏当前窗口

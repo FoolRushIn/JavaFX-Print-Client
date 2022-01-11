@@ -14,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
+@Component
 public class SettingViewController extends BaseController implements Initializable {
 
     public JFXTextField tfScanPath;

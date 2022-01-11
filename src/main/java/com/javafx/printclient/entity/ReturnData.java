@@ -3,6 +3,7 @@ package com.javafx.printclient.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class ReturnData implements Serializable{
 
 	private static final long serialVersionUID = 830238967474370032L;

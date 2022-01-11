@@ -3,6 +3,7 @@ package com.javafx.printclient.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * @ClassName UserLogin
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Component
 public class UserLogin {
     private String username;
     private String password;
