@@ -1,0 +1,8 @@
+com\javafx\printclient\stage\BaseStage.class
+com\javafx\printclient\controller\LoginController.class
+com\javafx\printclient\stage\MainStage.class
+com\javafx\printclient\controller\MainController.class
+com\javafx\printclient\utils\ResizeHelper.class
+com\javafx\printclient\MainApp.class
+com\javafx\printclient\utils\StringUtils.class
+com\javafx\printclient\utils\ResizeHelper$ResizeListener.class
