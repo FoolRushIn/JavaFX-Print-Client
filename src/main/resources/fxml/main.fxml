@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <StackPane fx:id="stackPane" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.172-ea"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.printclient.controller.MainController">
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.printclient.controller.MainViewController">
     <BorderPane fx:id="mainPane">
         <top>
             <VBox stylesheets="@../static/css/top_vbox.css">
@@ -24,9 +24,9 @@
         <!--            <fx:include fx:id="" source="items/bottom_view.fxml"/>-->
         <!--        </bottom>-->
 
-        <!--        <left>-->
-        <!--            <fx:include fx:id="leftPane" source="items/left_view.fxml" />-->
-        <!--        </left>-->
+<!--                <left>-->
+<!--                    <fx:include fx:id="leftPane" source="items/left_view.fxml" />-->
+<!--                </left>-->
 
         <!--        <right>-->
         <!--            <fx:include source="items/lyric_view.fxml"/>-->

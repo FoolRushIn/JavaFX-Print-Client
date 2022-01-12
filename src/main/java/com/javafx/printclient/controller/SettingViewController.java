@@ -43,7 +43,6 @@ public class SettingViewController extends BaseController implements Initializab
     }
 
     private void initView() {
-        System.out.println("initView-settings");
         if (properties == null || properties.length < 1) {
             properties = StringUtils.readProperties();
         }

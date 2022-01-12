@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.javafx.printclient.mapper.UserLoginMapper">
 
 
-	<!-- 查询是否有改用户 -->
-	<select id="loginCheck" resultType="int" parameterType="com.javafx.printclient.entity.UserLogin">
-		<!--	SELECT count(1) FROM user WHERE username = #{username} and password = #{password} AND ROWNUM = 1-->
-           SELECT count(1) FROM receipt WHERE  #{username} = receiptkey and #{password} = receiptkey
-       </select>
+    <!-- 查询是否有改用户 -->
+    <select id="loginCheck" resultType="int" parameterType="com.javafx.printclient.entity.UserLogin">
+        SELECT count(1) FROM user WHERE username = #{username} and password = #{password} AND ROWNUM = 1
+    </select>
 
-   </mapper>
+    <select id="test" resultType="int">
+        select 1 from dual
+    </select>
+
+</mapper>

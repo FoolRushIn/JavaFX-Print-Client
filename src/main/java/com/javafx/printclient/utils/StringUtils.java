@@ -41,7 +41,6 @@ public class StringUtils {
             reader = new InputStreamReader(com.javafx.printclient.utils.StringUtils.class.getResourceAsStream("/src/com.javafx.printclient/setting.properties"), StandardCharsets.UTF_8);
             prop.load(reader);
             prop.setProperty(key, content);
-            System.out.println("设置项更新完毕");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

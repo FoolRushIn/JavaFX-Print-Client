@@ -166,7 +166,7 @@
 
 /* 设置header的背景颜色*/
 .table-view > .column-header-background > .nested-column-header > .table-column {
-    -fx-background-color: rgba(179, 10, 182, 0.35);
+    -fx-background-color: gray;
 }
 
 .jfx-text-area {
@@ -193,9 +193,11 @@
 .jfx-text-area >  .corner {
     -fx-background-color:transparent;
 }
+
 /*********************/
 .table-view > .virtual-flow > .clipped-container > .sheet > .table-row-cell > .table-column .text {
-    -fx-font-family:Microsoft YaHei Light;
-    -fx-font-size:15;
+    -fx-font-family: Microsoft YaHei Light;
+    -fx-font-size: 15;
 }
+
 /*********************/

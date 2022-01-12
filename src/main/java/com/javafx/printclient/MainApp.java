@@ -5,8 +5,6 @@ import com.javafx.printclient.utils.ResizeHelper;
 import com.javafx.printclient.utils.StringUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.apache.ibatis.annotations.Mapper;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -36,7 +34,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        stage = new MainStage("fxml/items/login.fxml");
+        stage = new MainStage("fxml/items/login_view.fxml");
         ResizeHelper.addResizeListener(stage);
         if (StringUtils.readProperties() != null) {
             stage.setAlwaysOnTop(Boolean.parseBoolean(StringUtils.readProperties()[1]));

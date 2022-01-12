@@ -28,7 +28,7 @@ public class MainStage extends Stage {
         try {
             root = loader.load();
             //注册界面
-            if (fxml.contains("login.fxml")){
+            if (fxml.contains("login_view.fxml")){
                 scene = new Scene(root, 350.0, 250.0);
                 setMinWidth(350);
                 setMinHeight(250);

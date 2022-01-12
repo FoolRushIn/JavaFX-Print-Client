@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 @Component
 public class TopViewController extends BaseController implements Initializable {
 
-    @FXML
     StackPane stackPane;
 
     @FXML
@@ -66,6 +65,8 @@ public class TopViewController extends BaseController implements Initializable {
             }
             dialogLayout.setBody(settingsPane[0]);
             dialogLayout.setPrefSize(600, 340);
+            //获取到主界面的stackpane
+            stackPane = (StackPane) vBoxToDrag.getParent().getParent().getParent();
             new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP).show();
         });
 

@@ -25,5 +25,5 @@ p {
 }
 .pagination> .pagination-control> .control-box> .left-arrow-button:selected , .right-arrow-button:selected {
     -fx-background-radius: 3;
-    -fx-background-color: blue;
+    -fx-background-color: rgba(215, 40, 34, 0.89);
 }

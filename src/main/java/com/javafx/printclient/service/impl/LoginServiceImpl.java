@@ -34,7 +34,8 @@ public class LoginServiceImpl implements LoginService {
         try {
             userLogin.setUsername(username);
             userLogin.setPassword(password);
-            existAccount = userLoginMapper.loginCheck(userLogin);
+//            existAccount = userLoginMapper.loginCheck(userLogin);
+            existAccount = userLoginMapper.test();
             if (existAccount > 0) {
                 returnData.setKey(ReturnKeyEnum.成功.toString());
             } else {

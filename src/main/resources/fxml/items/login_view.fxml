@@ -13,17 +13,17 @@
 
 
     <children>
-        <JFXButton fx:id="loginButton" defaultButton="true" layoutX="74.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#login" prefHeight="30.0" prefWidth="202.0" ripplerFill="#ee0000" styleClass="button-raised" text="登录">
+        <JFXButton fx:id="loginButton" defaultButton="true" layoutX="131.0" layoutY="169.0" mnemonicParsing="false" onMouseClicked="#login" prefHeight="36.0" prefWidth="88.0" ripplerFill="RED" styleClass="button-raised" text="登录">
             <font>
                 <Font size="18.0" />
             </font>
         </JFXButton>
-        <JFXPasswordField fx:id="password" layoutX="131.0" layoutY="113.0" promptText="请输入密码" style="-fx-background-color: #e5e5e5; -fx-border-radius: 0 0 0 0; -fx-background-radius: 0 0 0 0; -fx-fill: black;">
+        <JFXPasswordField fx:id="password" alignment="CENTER" layoutX="131.0" layoutY="113.0" promptText="请输入密码" style="-fx-background-color: #e5e5e5; -fx-border-radius: 0 0 0 0; -fx-background-radius: 0 0 0 0; -fx-fill: black;">
             <font>
                 <Font size="14.0" />
             </font>
         </JFXPasswordField>
-        <JFXTextField fx:id="username" layoutX="131.0" layoutY="62.0" promptText="请输入用户名" style="-fx-background-color: #e5e5e5; -fx-border-radius: 0 0 0 0; -fx-background-radius: 0 0 0 0; -fx-fill: black;">
+        <JFXTextField fx:id="username" alignment="CENTER" layoutX="131.0" layoutY="62.0" promptText="请输入用户名" style="-fx-background-color: #e5e5e5; -fx-border-radius: 0 0 0 0; -fx-background-radius: 0 0 0 0; -fx-fill: black;">
             <font>
                 <Font size="14.0" />
             </font>
@@ -48,5 +48,10 @@
                 <MaterialDesignIconView glyphName="WINDOW_CLOSE" size="1em" />
             </graphic>
         </JFXButton>
+      <Label contentDisplay="CENTER" layoutX="24.0" layoutY="11.0" prefHeight="36.0" prefWidth="203.0" text="及时打印客户端" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="Tw Cen MT Condensed Extra Bold" size="22.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
