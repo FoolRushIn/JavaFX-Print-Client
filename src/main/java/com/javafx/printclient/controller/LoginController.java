@@ -95,6 +95,8 @@ public class LoginController implements Initializable {
         ReturnData returnData = loginService.loginAccountCheck(username.getText(), password.getText());
         if (!returnData.getKey().equalsIgnoreCase("ok")) {
             alertError.setContentText("用户名或密码错误,请重试!");
+            alertError.show();
+            return;
         }
 
         //成功 跳转到主界面

@@ -30,13 +30,16 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ReturnData loginAccountCheck(String username, String password) {
-
+        int existAccount = 0;
         try {
             userLogin.setUsername(username);
             userLogin.setPassword(password);
-//            userLoginMapper.loginCheck(userLogin);
-            userLoginMapper.query(username);
-            returnData.setKey(ReturnKeyEnum.成功.toString());
+            existAccount = userLoginMapper.loginCheck(userLogin);
+            if (existAccount > 0) {
+                returnData.setKey(ReturnKeyEnum.成功.toString());
+            } else {
+                returnData.setKey(ReturnKeyEnum.异常.toString());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             returnData.setKey(ReturnKeyEnum.异常.toString());

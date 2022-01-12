@@ -1,9 +1,12 @@
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@192:168:0:238/wm
+    url: jdbc:oracle:thin:@192.168.0.238:1521:wm
     username: wmwhse1
     password: WMwhSqlWMwhSql1
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.javafx.printclient.entity.*
+logging:
+  level:
+    com.lucifer.springboot.cache.mapper: debug

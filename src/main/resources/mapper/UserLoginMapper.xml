@@ -7,12 +7,8 @@
 
 	<!-- 查询是否有改用户 -->
 	<select id="loginCheck" resultType="int" parameterType="com.javafx.printclient.entity.UserLogin">
--- 		SELECT count(1) FROM user WHERE username = #{username} and password = #{password} AND ROWNUM = 1
-		SELECT count(1) FROM receipt WHERE ROWNUM = 1 and #{username}
-	</select>
+		<!--	SELECT count(1) FROM user WHERE username = #{username} and password = #{password} AND ROWNUM = 1-->
+           SELECT count(1) FROM receipt WHERE  #{username} = receiptkey and #{password} = receiptkey
+       </select>
 
-	<select id="query" resultType="java.lang.Integer">
-		SELECT count(1) FROM receipt WHERE ROWNUM = 1 and #{username}
-	</select>
-
-</mapper>
+   </mapper>
