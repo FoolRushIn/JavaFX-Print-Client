@@ -1,7 +1,6 @@
 package com.javafx.printclient.controller;
 
 
-import com.javafx.printclient.entity.ConfigEntity;
 import com.javafx.printclient.service.Printer;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -10,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -36,8 +32,11 @@ public class InsertPrinterViewController extends BaseController implements Initi
     public JFXButton confirm;
     public JFXButton cancel;
 
-    @Resource
-    ConfigEntity configEntity;
+    @Value("${printerpath}")
+    private String printerpath;
+
+    @Value("${spring.datasource.url}")
+    private String url;
 
     private static Map<String, Printer> allPrinter = new HashMap();
 
@@ -91,9 +90,9 @@ public class InsertPrinterViewController extends BaseController implements Initi
         FileInputStream in = null;
 
         try {
-            File f = new File(configEntity.getPrinterpath());
+            File f = new File(printerpath);
             if (f.exists()) {
-                in = new FileInputStream(configEntity.getPrinterpath());
+                in = new FileInputStream(printerpath);
                 prop.load(in);
                 Iterator it = prop.stringPropertyNames().iterator();
 

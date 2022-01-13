@@ -10,3 +10,4 @@ mybatis:
 logging:
   level:
     com.lucifer.springboot.cache.mapper: debug
+printerpath: printer.properties
