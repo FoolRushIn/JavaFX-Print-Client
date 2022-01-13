@@ -80,7 +80,7 @@ public class LoginController implements Initializable {
     public void login() {
         //登录验证
         Alert alertError = new Alert(Alert.AlertType.ERROR);
-        Alert alertInformation = new Alert(Alert.AlertType.INFORMATION);
+//        Alert alertInformation = new Alert(Alert.AlertType.INFORMATION);
         if (StringUtils.isEmpty(username.getText())) {
             alertError.setContentText("用户名不能为空！");
             alertError.show();
@@ -100,7 +100,8 @@ public class LoginController implements Initializable {
         }
 
         //成功 跳转到主界面
-        alertInformation.setContentText("登录成功,即将跳转到主页面!");
+//        alertInformation.setContentText("登录成功,即将跳转到主页面!");
+//        alertInformation.show();
 
         //这个方法无法实现拖拽窗口
 //        openMainWindow();

@@ -43,6 +43,7 @@ public class PrinterManagementController extends BaseController implements Initi
     @FXML
     public JFXButton cancelButton;
 
+    public static JFXDialog jfxDialog;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,13 +99,14 @@ public class PrinterManagementController extends BaseController implements Initi
         insertButton.setOnAction(ae -> {
             JFXDialogLayout dialogLayout = new JFXDialogLayout();
             if (insertPrinterPane[0] == null) {
-                insertPrinterPane[0] = LoadUtil.loadFXML("fxml/items/setting_view.fxml");
+                insertPrinterPane[0] = LoadUtil.loadFXML("fxml/items/insert_printer_view.fxml");
             }
             dialogLayout.setBody(insertPrinterPane[0]);
             dialogLayout.setPrefSize(600, 340);
             //获取到主界面的stackpane
             StackPane stackPane = (StackPane) printer_management_pane.getParent().getParent().getParent().getParent().getParent().getParent().getParent().getParent();
-            new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP).show();
+            jfxDialog =new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+            jfxDialog.show();
         });
     }
 
@@ -119,5 +121,10 @@ public class PrinterManagementController extends BaseController implements Initi
         pagination.setCurrentPageIndex(0);
         //设置pagination的页数
         pagination.setPageCount((totalCount % 30) > 0 ? (totalCount / 30 + 1) : totalCount / 30);
+    }
+
+    //关闭弹窗
+    public static void closePopWindow() {
+        jfxDialog.close();
     }
 }
