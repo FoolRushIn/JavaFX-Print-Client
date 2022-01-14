@@ -20,5 +20,7 @@ public abstract class BaseController {
     public void showResult(Object data, int flag){}
 
     //初始化数据
-    public void initData(Object data) { }
+    public void initData() { }
+
+    public abstract void showResult();
 }

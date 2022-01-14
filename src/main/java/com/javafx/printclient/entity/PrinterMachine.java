@@ -19,5 +19,5 @@ public class PrinterMachine {
     private int serialkey;
     private String printerRegistered;
     private String printerInSystem;
-    private boolean activeMode;
+    private String activeMode;
 }

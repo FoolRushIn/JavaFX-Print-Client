@@ -40,8 +40,8 @@ public class MainStage extends Stage {
             setScene(scene);
             centerOnScreen();
             setTitle("及时报表打印");
-            Image image = new Image("static/icon/音乐-1.png", 50, 50, true, true);
-            getIcons().add(image);
+//            Image image = new Image("static/icon/音乐-1.png", 50, 50, true, true);
+//            getIcons().add(image);
 
             //定义Stage具有纯白色背景且没有装饰的样式。
             initStyle(StageStyle.UNDECORATED);

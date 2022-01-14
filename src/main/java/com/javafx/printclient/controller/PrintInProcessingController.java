@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
-public class PrintInProcessingController extends BaseController implements Initializable {
+public class PrintInProcessingController implements Initializable {
 
     @FXML public BorderPane printer_management_pane;
     @FXML public Pagination pagination;
@@ -39,12 +39,15 @@ public class PrintInProcessingController extends BaseController implements Initi
 //        initEvent();
     }
 
-    @Override
+
     public void initData(Object data) {
         initPagination((int)data);
     }
 
     private void initView() {
+
+        pagination.setVisible(false);
+
         //确定数据导入的列 属性值要和实体类的属性对的上
         tColumn_serial.setCellValueFactory(new PropertyValueFactory<>("serialkey"));
         tColumn_printer.setCellValueFactory(new PropertyValueFactory<>("printer"));

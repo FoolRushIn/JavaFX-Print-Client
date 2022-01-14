@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class SettingViewController extends BaseController implements Initializable {
+public class SettingViewController implements Initializable {
 
     public JFXTextField tfScanPath;
     public JFXButton btnSelectPath;

@@ -53,12 +53,6 @@ public class LoginController implements Initializable {
     @Autowired
     private LoginService loginService;
 
-    private MainApp mainApp;
-
-    public void setApp(MainApp mainApp) {
-        this.mainApp = mainApp;
-    }
-
     /**
      * 初始化方法
      *
@@ -70,7 +64,6 @@ public class LoginController implements Initializable {
         initView();
         initEvent();
     }
-
 
 
     /**
@@ -100,8 +93,6 @@ public class LoginController implements Initializable {
         }
 
         //成功 跳转到主界面
-//        alertInformation.setContentText("登录成功,即将跳转到主页面!");
-//        alertInformation.show();
 
         //这个方法无法实现拖拽窗口
 //        openMainWindow();

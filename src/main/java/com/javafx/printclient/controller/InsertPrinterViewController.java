@@ -2,43 +2,36 @@ package com.javafx.printclient.controller;
 
 
 import com.javafx.printclient.service.Printer;
+import com.javafx.printclient.utils.PrinterUtil;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.print.DocFlavor;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 @Component
-public class InsertPrinterViewController extends BaseController implements Initializable {
+public class InsertPrinterViewController implements Initializable {
 
     public JFXTextField printerRegisterName;
     public ChoiceBox choiceBox;
     public JFXButton confirm;
     public JFXButton cancel;
 
-    @Value("${printerpath}")
-    private String printerpath;
-
-    @Value("${spring.datasource.url}")
-    private String url;
-
-    private static Map<String, Printer> allPrinter = new HashMap();
+    public static Map<String, Printer> allPrinter = new HashMap();
 
 
     @Override
@@ -47,6 +40,7 @@ public class InsertPrinterViewController extends BaseController implements Initi
         initEvent();
     }
 
+    @FXML
     private void initView() {
         //将本地的打印机加载到下拉框中
         PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
@@ -62,6 +56,7 @@ public class InsertPrinterViewController extends BaseController implements Initi
     }
 
 
+    @FXML
     private void initEvent() {
         //确认按钮点击事件
         confirm.setOnAction(ae -> {
@@ -70,57 +65,22 @@ public class InsertPrinterViewController extends BaseController implements Initi
             String choosePrinter = choiceBox.getValue().toString();
 
             //将数据写入到配置文件中
-            loadPrinter();
+            PrinterUtil.savePrinter(inputText, choosePrinter);
 
             //弹出提示并关闭该弹窗
             Alert alertInformation = new Alert(Alert.AlertType.INFORMATION);
-            alertInformation.setContentText("登录成功,即将跳转到主页面!");
+            alertInformation.setContentText("添加成功");
             alertInformation.show();
 
             PrinterManagementController.closePopWindow();
+
+            //刷新管理打印机的界面数据
+            BaseController.BC_CONTEXT.get(PrinterManagementController.class.getName()).showResult();
         });
         //取消按钮点击事件
         cancel.setOnAction(ae -> {
+            printerRegisterName.setText("");
             PrinterManagementController.closePopWindow();
         });
-    }
-
-    public void loadPrinter() {
-        Properties prop = new Properties();
-        FileInputStream in = null;
-
-        try {
-            File f = new File(printerpath);
-            if (f.exists()) {
-                in = new FileInputStream(printerpath);
-                prop.load(in);
-                Iterator it = prop.stringPropertyNames().iterator();
-
-                while (it.hasNext()) {
-                    String key = (String) it.next();
-                    String value = prop.getProperty(key);
-                    this.addPrinter(key, value);
-                }
-            }
-        } catch (IOException var15) {
-            var15.printStackTrace();
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException var14) {
-                    var14.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public void addPrinter(String printerName, String osprintername) {
-        if (!allPrinter.containsKey(printerName.toUpperCase())) {
-            Printer printer = new Printer(printerName);
-            printer.setOsPrinterName(osprintername);
-            allPrinter.put(printerName, printer);
-//            printer.startThread();
-        }
     }
 }

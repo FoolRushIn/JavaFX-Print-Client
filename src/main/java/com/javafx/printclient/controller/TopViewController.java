@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
-public class TopViewController extends BaseController implements Initializable {
+public class TopViewController implements Initializable {
 
     StackPane stackPane;
 
