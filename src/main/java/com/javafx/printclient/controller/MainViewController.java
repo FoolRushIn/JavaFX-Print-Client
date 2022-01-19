@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-public class MainViewController implements Initializable {
+public class MainViewController extends BaseController implements Initializable {
     @FXML
     public SplitPane splitPane;
 
@@ -47,8 +47,13 @@ public class MainViewController implements Initializable {
     }
 
 
+    @Override
+    public void showResult() {
+
+    }
+
     //加载中间界面的多个模块
-    private void initView() {
+    public void initView() {
 //
 //        MainApp.hideWindow();
 //        MainApp.stage = new MainStage("fxml/main.fxml");

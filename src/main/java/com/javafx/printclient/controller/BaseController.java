@@ -16,11 +16,10 @@ public abstract class BaseController {
         BC_CONTEXT.put(this.getClass().getName(), this);
     }
 
-    //更新ui界面,展示结果
-    public void showResult(Object data, int flag){}
-
     //初始化数据
     public void initData() { }
 
     public abstract void showResult();
+
+    public void initView() {}
 }

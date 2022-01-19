@@ -5,10 +5,6 @@ import javafx.scene.Node;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-/**
- * Class description：自定义按钮，新增attribute字段，用来储存额外信息
- */
-
 @Component
 public class MyButton extends JFXButton {
 

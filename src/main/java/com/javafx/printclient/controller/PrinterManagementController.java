@@ -1,15 +1,15 @@
 package com.javafx.printclient.controller;
 
+import com.javafx.printclient.common.LabelService;
 import com.javafx.printclient.entity.MyButton;
 import com.javafx.printclient.entity.PrinterMachine;
 import com.javafx.printclient.service.Printer;
+import com.javafx.printclient.utils.IDCell;
 import com.javafx.printclient.utils.LoadUtil;
-import com.javafx.printclient.utils.PrinterUtil;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -72,6 +72,8 @@ public class PrinterManagementController extends BaseController implements Initi
 
     private static PrinterMachine currSelected;
 
+    LabelService labelService = LabelService.getInstance();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,8 +87,8 @@ public class PrinterManagementController extends BaseController implements Initi
         new PrinterManagementController().cbListChange();
     }
 
-    @FXML
-    private void initView() {
+    @Override
+    public void initView() {
 
         pagination.setVisible(false);
 
@@ -97,6 +99,8 @@ public class PrinterManagementController extends BaseController implements Initi
         tColumn_printer_registered.setCellValueFactory(new PropertyValueFactory<>("printerRegistered"));
         tColumn_printer_system.setCellValueFactory(new PropertyValueFactory<>("printerInSystem"));
         tColumn_printer_inuse.setCellValueFactory(new PropertyValueFactory<>("activeMode"));
+        //序号列
+        tColumn_serial.setCellFactory(new IDCell<>());
         tColumn_printer_operate.setCellFactory(param -> new TableCell() {
             @Override
             protected void updateItem(Object item, boolean empty) {
@@ -108,34 +112,6 @@ public class PrinterManagementController extends BaseController implements Initi
                 }
             }
         });
-
-//        tableView.setRowFactory(tableViewTemp -> {
-//            final TableRow<PrinterMachine> row = new TableRow<>();
-//            final ContextMenu rowMenu = new ContextMenu();
-//            MenuItem removeItem = new MenuItem("Delete");
-//            removeItem.setOnAction(e -> {
-//                tableView.getSelectionModel().select(row.getIndex());
-//                currSelected = (PrinterMachine) tableView.getSelectionModel().getSelectedItem();
-//                int wordid = PrinterMachine.getSelectionModel().getSelectedItem().getWordToFindId();
-//                PrinterMachine(wordid);
-//                PrinterMachine.getItems().remove(row.getItem());
-//            });
-//
-//            rowMenu.getItems().addAll(removeItem);
-//            row.contextMenuProperty().bind(
-//                    Bindings.when(Bindings.isNotNull(row.itemProperty()))
-//                            .then(rowMenu)
-//                            .otherwise((ContextMenu)null));
-//
-//            row.setOnMouseClicked(event -> {
-//                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-//                    // some code here .....
-//                }
-//            });
-//
-//            return row;
-//        });
-
 
         tableView.setItems(collect);
 
@@ -192,13 +168,13 @@ public class PrinterManagementController extends BaseController implements Initi
                 while (it.hasNext()) {
                     String key = (String) it.next();
                     String value = prop.getProperty(key);
-                    PrinterUtil.addPrinter(key, value);
+                    labelService.addPrinter(key, value);
                 }
-                for (Map.Entry<String, Printer> entry : PrinterUtil.allPrinter.entrySet()) {
+                for (Map.Entry<String, Printer> entry : LabelService.allPrinter.entrySet()) {
                     printerMachine = new PrinterMachine();
                     printerMachine.setPrinterRegistered(entry.getKey());
                     printerMachine.setPrinterInSystem(entry.getValue().getOsPrinterName());
-                    printerMachine.setActiveMode(entry.getValue().getStatus().toString());
+                    printerMachine.setActiveMode(entry.getValue().getPrinterActive()?"准备好了":"还没准备好");
                     printerMachineList.add(printerMachine);
                 }
             }
@@ -246,15 +222,19 @@ public class PrinterManagementController extends BaseController implements Initi
                     System.out.println("停止");
                     break;
                 case "删除":
-                    PrinterUtil.removePrinterAction(currSelected.getPrinterRegistered());
+                    labelService.removePrinterAction(currSelected.getPrinterRegistered());
                     System.out.println("删除" + currSelected.getPrinterRegistered());
                     break;
                 default:
                     System.out.println("没获取到按钮");
                     break;
             }
-            BaseController.BC_CONTEXT.get(PrinterManagementController.class.getName()).showResult();
 
+            //刷新表格框架
+            Platform.runLater(() -> BaseController.BC_CONTEXT.get(PrinterManagementController.class.getName()).initView());
+
+            //刷新内容
+            BaseController.BC_CONTEXT.get(PrinterManagementController.class.getName()).showResult();
         }));
     }
 }

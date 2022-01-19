@@ -1,8 +1,7 @@
 package com.javafx.printclient.controller;
 
 
-import com.javafx.printclient.service.Printer;
-import com.javafx.printclient.utils.PrinterUtil;
+import com.javafx.printclient.common.LabelService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -19,8 +18,6 @@ import javax.print.PrintServiceLookup;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 @Component
@@ -31,7 +28,7 @@ public class InsertPrinterViewController implements Initializable {
     public JFXButton confirm;
     public JFXButton cancel;
 
-    public static Map<String, Printer> allPrinter = new HashMap();
+    LabelService labelService = LabelService.getInstance();
 
 
     @Override
@@ -65,13 +62,17 @@ public class InsertPrinterViewController implements Initializable {
             String choosePrinter = choiceBox.getValue().toString();
 
             //将数据写入到配置文件中
-            PrinterUtil.savePrinter(inputText, choosePrinter);
+            labelService.savePrinter(inputText, choosePrinter);
 
             //弹出提示并关闭该弹窗
             Alert alertInformation = new Alert(Alert.AlertType.INFORMATION);
             alertInformation.setContentText("添加成功");
             alertInformation.show();
 
+            //清空输入框的内容
+            printerRegisterName.setText("");
+
+            //关闭弹窗
             PrinterManagementController.closePopWindow();
 
             //刷新管理打印机的界面数据
@@ -79,7 +80,10 @@ public class InsertPrinterViewController implements Initializable {
         });
         //取消按钮点击事件
         cancel.setOnAction(ae -> {
+            //清空输入框的内容
             printerRegisterName.setText("");
+
+            //关闭弹窗
             PrinterManagementController.closePopWindow();
         });
     }
