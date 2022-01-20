@@ -27,7 +27,6 @@ public class ClientHandler extends IoHandlerAdapter {
 
     @Override
     public void sessionOpened(IoSession session) throws Exception {
-        // TODO Auto-generated method stub
         super.sessionOpened(session);
         LogUtils.DT("session:" + session.getId() + " 已建立");
     }

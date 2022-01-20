@@ -9,13 +9,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 /**
  * @ClassName PrinterServiceImpl
- * @Description TODO
+ * @Description
  * @Author sue
  * @Date 2022/1/14 11:12
  * @Version 1.0
