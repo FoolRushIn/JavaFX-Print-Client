@@ -4,6 +4,7 @@
 //
 package com.javafx.printclient.common;
 
+import com.javafx.printclient.entity.PrinterMachine;
 import com.javafx.printclient.httputil.HttpManager;
 import com.javafx.printclient.mina.MinaClient;
 import com.javafx.printclient.service.Printer;
@@ -35,9 +36,9 @@ public class LabelService {
     private final String REMOTERPTPATH = "remoterptpath";
     public static Map<String, Printer> allPrinter = new HashMap();
     private boolean active = false;
-    private String xmlPath = "";
-    private String rptPath = "";
-    private String logPath = "";
+    private static String xmlPath = "D:/IdeaWorkspace/Client/raptorx-client/xml";
+    private static String rptPath = "D:/IdeaWorkspace/Client/raptorx-client/label";
+    private static String logPath = "D:/IdeaWorkspace/Client/raptorx-client/log";
     private String ftpAddr = "";
     private String ftpUser = "";
     private String ftpPwd = "";

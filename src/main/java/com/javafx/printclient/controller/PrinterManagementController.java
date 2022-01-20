@@ -73,6 +73,8 @@ public class PrinterManagementController extends BaseController implements Initi
     private static PrinterMachine currSelected;
 
     LabelService labelService = LabelService.getInstance();
+    List<PrinterMachine> printerMachineList = new ArrayList<>();
+    PrinterMachine printerMachine = null;
 
 
     @Override
@@ -92,7 +94,17 @@ public class PrinterManagementController extends BaseController implements Initi
 
         pagination.setVisible(false);
 
-        ObservableList<PrinterMachine> collect = FXCollections.observableArrayList(this.loadPrinter());
+        labelService.loadPrinter();
+
+        for (Map.Entry<String, Printer> entry :LabelService.allPrinter.entrySet()) {
+            printerMachine = new PrinterMachine();
+            printerMachine.setPrinterRegistered(entry.getKey());
+            printerMachine.setPrinterInSystem(entry.getValue().getOsPrinterName());
+            printerMachine.setActiveMode(entry.getValue().getPrinterActive() ? "就绪" : "停用");
+            printerMachineList.add(printerMachine);
+        }
+
+        ObservableList<PrinterMachine> collect = FXCollections.observableArrayList(printerMachineList);
 
         //确定数据导入的列   属性值要和实体类的属性对的上
         tColumn_serial.setCellValueFactory(new PropertyValueFactory<>("serialkey"));
@@ -101,6 +113,7 @@ public class PrinterManagementController extends BaseController implements Initi
         tColumn_printer_inuse.setCellValueFactory(new PropertyValueFactory<>("activeMode"));
         //序号列
         tColumn_serial.setCellFactory(new IDCell<>());
+        //操作框按钮
         tColumn_printer_operate.setCellFactory(param -> new TableCell() {
             @Override
             protected void updateItem(Object item, boolean empty) {
@@ -174,7 +187,7 @@ public class PrinterManagementController extends BaseController implements Initi
                     printerMachine = new PrinterMachine();
                     printerMachine.setPrinterRegistered(entry.getKey());
                     printerMachine.setPrinterInSystem(entry.getValue().getOsPrinterName());
-                    printerMachine.setActiveMode(entry.getValue().getPrinterActive()?"准备好了":"还没准备好");
+                    printerMachine.setActiveMode(entry.getValue().getPrinterActive() ? "就绪" : "停用");
                     printerMachineList.add(printerMachine);
                 }
             }
@@ -214,16 +227,22 @@ public class PrinterManagementController extends BaseController implements Initi
             MenuItem menuItem = (MenuItem) me.getSource();
             System.out.println(menuItem);
             String itemText = item.getText();   //获取复选框的文本
-            switch (itemText){
+            switch (itemText) {
                 case "开启":
+                    labelService.setActive(currSelected.getPrinterRegistered(), true);
+//                    for (Map.Entry<String, Printer> entry : LabelService.allPrinter.entrySet()) {
+//                        if (entry.getKey().equalsIgnoreCase(currSelected.getPrinterRegistered()) && !entry.getValue().getPrinterActive()) {
+//                            entry.getValue().setPrinterActive(true);
+//                        }
+//                    }
                     System.out.println("开启");
                     break;
                 case "停止":
+                    labelService.setActive(currSelected.getPrinterRegistered(), false);
                     System.out.println("停止");
                     break;
                 case "删除":
                     labelService.removePrinterAction(currSelected.getPrinterRegistered());
-                    System.out.println("删除" + currSelected.getPrinterRegistered());
                     break;
                 default:
                     System.out.println("没获取到按钮");

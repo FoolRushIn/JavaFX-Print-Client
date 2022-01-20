@@ -69,17 +69,84 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>de.roskenet</groupId>-->
-<!--            <artifactId>springboot-javafx-support</artifactId>-->
-<!--            <version>2.1.6</version>-->
-<!--        </dependency>-->
+        <!-- pdfbox dependencies -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.18</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/fontbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>fontbox</artifactId>
+            <version>2.0.18</version>
+        </dependency>
+        <!-- birt依赖包 -->
+        <!-- https://mvnrepository.com/artifact/org.eclipse.equinox/org.eclipse.equinox.registry -->
+        <dependency>
+            <groupId>org.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.registry</artifactId>
+            <version>3.5.101</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.core/org.eclipse.core.runtime -->
+        <dependency>
+            <groupId>org.eclipse.core</groupId>
+            <artifactId>org.eclipse.core.runtime</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.osgi/org.eclipse.osgi -->
+        <dependency>
+            <groupId>org.eclipse.osgi</groupId>
+            <artifactId>org.eclipse.osgi</artifactId>
+            <version>3.7.1</version>
+        </dependency>
+        <!-- pdfbox dependencies -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.18</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/fontbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>fontbox</artifactId>
+            <version>2.0.18</version>
+        </dependency>
+        <!-- BIRT dependencies -->
+        <dependency>
+            <groupId>org.eclipse.birt.runtime</groupId>
+            <artifactId>org.eclipse.birt.runtime</artifactId>
+            <version>4.5.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.birt.runtime</groupId>
+                    <artifactId>org.eclipse.orbit.mongodb</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.birt.runtime.3_7_1</groupId>
+                    <artifactId>org.apache.batik.bridge</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>de.roskenet</groupId>-->
+        <!--            <artifactId>springboot-javafx-support</artifactId>-->
+        <!--            <version>2.1.6</version>-->
+        <!--        </dependency>-->
         <!-- druid -->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>druid-spring-boot-starter</artifactId>-->
-<!--            <version>${druid.version}</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba</groupId>-->
+        <!--            <artifactId>druid-spring-boot-starter</artifactId>-->
+        <!--            <version>${druid.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc7</artifactId>
@@ -124,17 +191,17 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
-<!--        <dependency>-->
-<!--            <groupId>com.lowagie</groupId>-->
-<!--            <artifactId>itext</artifactId>-->
-<!--            <version>2.1.7</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.lowagie</groupId>-->
+        <!--            <artifactId>itext</artifactId>-->
+        <!--            <version>2.1.7</version>-->
+        <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
-<!--        <dependency>-->
-<!--            <groupId>com.lowagie</groupId>-->
-<!--            <artifactId>itext</artifactId>-->
-<!--            <version>2.1.7.js5</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.lowagie</groupId>-->
+        <!--            <artifactId>itext</artifactId>-->
+        <!--            <version>2.1.7.js5</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>xml-apis</groupId>
@@ -143,11 +210,11 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.xalan/xalan -->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.xalan</groupId>-->
-<!--            <artifactId>xalan</artifactId>-->
-<!--            <version>2.7.2</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.xalan</groupId>-->
+        <!--            <artifactId>xalan</artifactId>-->
+        <!--            <version>2.7.2</version>-->
+        <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/net.sourceforge.barbecue/barbecue -->
         <dependency>

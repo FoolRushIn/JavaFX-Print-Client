@@ -1,6 +1,10 @@
 package com.javafx.printclient.controller;
 
+import com.javafx.printclient.common.LabelService;
 import com.javafx.printclient.entity.InProcessingData;
+import com.javafx.printclient.entity.PrinterMachine;
+import com.javafx.printclient.service.Printer;
+import com.javafx.printclient.utils.IDCell;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 @Component
@@ -30,6 +35,10 @@ public class PrintInProcessingController implements Initializable {
     @FXML public TableColumn tColumn_note;
     @FXML public Label labTitle;
     @FXML public JFXTextArea jfxTextAreaIntro;
+
+    LabelService labelService = LabelService.getInstance();
+    List<InProcessingData> inProcessingDataList = new ArrayList<>();
+    InProcessingData inProcessingData = null;
 
 
     @Override
@@ -53,14 +62,27 @@ public class PrintInProcessingController implements Initializable {
         tColumn_printer.setCellValueFactory(new PropertyValueFactory<>("printer"));
         tColumn_status.setCellValueFactory(new PropertyValueFactory<>("status"));
         tColumn_note.setCellValueFactory(new PropertyValueFactory<>("note"));
+        tColumn_serial.setCellFactory(new IDCell<>());
 
         //测试数据
-        ObservableList<InProcessingData> collect = FXCollections.observableArrayList(
-            new InProcessingData(1, "one", "one", "one"),
-            new InProcessingData(2, "two", "two", "two"),
-            new InProcessingData(3, "three", "three", "three"),
-            new InProcessingData(4, "four", "four", "four")
-        );
+//        ObservableList<InProcessingData> collect = FXCollections.observableArrayList(
+//            new InProcessingData(1, "one", "one", "one"),
+//            new InProcessingData(2, "two", "two", "two"),
+//            new InProcessingData(3, "three", "three", "three"),
+//            new InProcessingData(4, "four", "four", "four")
+//        );
+
+        labelService.loadPrinter();
+
+        for (Map.Entry<String, Printer> entry :LabelService.allPrinter.entrySet()) {
+            inProcessingData = new InProcessingData();
+            inProcessingData.setPrinter(entry.getKey());
+            inProcessingData.setStatus(Printer.statusMap.get("0"));
+            inProcessingData.setNote("");
+            inProcessingDataList.add(inProcessingData);
+        }
+
+        ObservableList<InProcessingData> collect = FXCollections.observableArrayList(inProcessingDataList);
 
 
         tableView.setItems(collect);
