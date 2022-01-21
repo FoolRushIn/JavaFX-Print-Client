@@ -6,15 +6,17 @@ import com.javafx.printclient.entity.PrinterMachine;
 import com.javafx.printclient.service.Printer;
 import com.javafx.printclient.utils.IDCell;
 import com.jfoenix.controls.JFXTextArea;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -22,9 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Component
-public class PrintInProcessingController implements Initializable {
+public class PrintInProcessingController extends BaseController implements Initializable {
 
     @FXML public BorderPane printer_management_pane;
     @FXML public Pagination pagination;
@@ -53,7 +57,29 @@ public class PrintInProcessingController implements Initializable {
         initPagination((int)data);
     }
 
-    private void initView() {
+    //    @Override
+    public void showResult() {
+        inProcessingDataList.clear();
+        for (Map.Entry<String, Printer> entry :LabelService.allPrinter.entrySet()) {
+            inProcessingData = new InProcessingData();
+            inProcessingData.setSerialkey(entry.getKey());
+            inProcessingData.setStatus(Printer.statusMap.get("0"));
+            inProcessingData.setNote("");
+            inProcessingDataList.add(inProcessingData);
+        }
+        CompletableFuture.runAsync(() -> {
+            Platform.runLater(() -> tableView.getItems().clear());
+        }).whenComplete((v, t) -> {
+            pagination.setDisable(true);
+            if (t != null) {
+                t.printStackTrace();
+            } else {
+                Platform.runLater(() -> tableView.getItems().addAll(inProcessingDataList));
+            }
+        });
+    }
+
+    public void initView() {
 
         pagination.setVisible(false);
 
@@ -63,14 +89,6 @@ public class PrintInProcessingController implements Initializable {
         tColumn_status.setCellValueFactory(new PropertyValueFactory<>("status"));
         tColumn_note.setCellValueFactory(new PropertyValueFactory<>("note"));
         tColumn_serial.setCellFactory(new IDCell<>());
-
-        //测试数据
-//        ObservableList<InProcessingData> collect = FXCollections.observableArrayList(
-//            new InProcessingData(1, "one", "one", "one"),
-//            new InProcessingData(2, "two", "two", "two"),
-//            new InProcessingData(3, "three", "three", "three"),
-//            new InProcessingData(4, "four", "four", "four")
-//        );
 
         labelService.loadPrinter();
 
@@ -86,32 +104,7 @@ public class PrintInProcessingController implements Initializable {
 
 
         tableView.setItems(collect);
-//        tableView.getColumns().addAll(tColumn_serial, tColumn_printer, tColumn_status, tColumn_note);
     }
-
-
-
-//    private void initEvent() {
-//        //分页控件事件
-//        pagination.setPageFactory(param -> {
-//            if (!CommonResources.isPaginationInit) {
-//                pagination.setDisable(true);
-//                return null;
-//            } else {
-//                pagination.setDisable(false);
-//                if (!CommonResources.isPaginationDone) {
-//                    return CommonResources.getNode();
-//                }
-//                requestMusic(param);
-//                return CommonResources.getNode();
-//            }
-//        });
-//    }
-
-//    private MusicResources.CurrentSelectIndexCallback currentSelectIndexCallback = index -> {
-//        tableView.getSelectionModel().select(index);
-//        tableView.scrollTo(index <= 5 ? 0 : index - 5);
-//    };
 
 
     //初始化分页控件，在每次有新数据到达TableView之后

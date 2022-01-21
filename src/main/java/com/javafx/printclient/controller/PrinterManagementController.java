@@ -96,7 +96,7 @@ public class PrinterManagementController extends BaseController implements Initi
 
         labelService.loadPrinter();
 
-        for (Map.Entry<String, Printer> entry :LabelService.allPrinter.entrySet()) {
+        for (Map.Entry<String, Printer> entry : LabelService.allPrinter.entrySet()) {
             printerMachine = new PrinterMachine();
             printerMachine.setPrinterRegistered(entry.getKey());
             printerMachine.setPrinterInSystem(entry.getValue().getOsPrinterName());
@@ -225,7 +225,6 @@ public class PrinterManagementController extends BaseController implements Initi
         //给复选框设置选择事件
         selectCheckBsList.forEach(item -> item.setOnAction(me -> {
             MenuItem menuItem = (MenuItem) me.getSource();
-            System.out.println(menuItem);
             String itemText = item.getText();   //获取复选框的文本
             switch (itemText) {
                 case "开启":
@@ -254,6 +253,8 @@ public class PrinterManagementController extends BaseController implements Initi
 
             //刷新内容
             BaseController.BC_CONTEXT.get(PrinterManagementController.class.getName()).showResult();
+            BaseController.BC_CONTEXT.get(PrintInProcessingController.class.getName()).showResult();
+
         }));
     }
 }

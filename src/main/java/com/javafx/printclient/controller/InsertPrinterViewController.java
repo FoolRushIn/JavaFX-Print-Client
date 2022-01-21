@@ -4,6 +4,7 @@ package com.javafx.printclient.controller;
 import com.javafx.printclient.common.LabelService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -77,6 +78,7 @@ public class InsertPrinterViewController implements Initializable {
 
             //刷新管理打印机的界面数据
             BaseController.BC_CONTEXT.get(PrinterManagementController.class.getName()).showResult();
+            BaseController.BC_CONTEXT.get(PrintInProcessingController.class.getName()).showResult();
         });
         //取消按钮点击事件
         cancel.setOnAction(ae -> {
