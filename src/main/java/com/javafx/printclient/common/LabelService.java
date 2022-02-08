@@ -4,7 +4,8 @@
 //
 package com.javafx.printclient.common;
 
-import com.javafx.printclient.entity.PrinterMachine;
+import com.javafx.printclient.controller.BaseController;
+import com.javafx.printclient.controller.PrintInProcessingController;
 import com.javafx.printclient.httputil.HttpManager;
 import com.javafx.printclient.mina.MinaClient;
 import com.javafx.printclient.service.Printer;
@@ -12,6 +13,7 @@ import com.javafx.printclient.utils.StringUtil;
 import com.javafx.printclient.utils.ZipUtil;
 import com.sie.infor.message.FileTask;
 import com.sie.infor.message.SocketMessage;
+import javafx.beans.property.SimpleObjectProperty;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
@@ -35,6 +37,7 @@ public class LabelService {
     private final String REMOTEMETHOD = "remotemethod";
     private final String REMOTERPTPATH = "remoterptpath";
     public static Map<String, Printer> allPrinter = new HashMap();
+    public static SimpleObjectProperty<Map<String, Printer>> allPrinterChangeListener = new SimpleObjectProperty<>();
     private boolean active = false;
     private static String xmlPath = "D:/IdeaWorkspace/Client/raptorx-client/xml";
     private static String rptPath = "D:/IdeaWorkspace/Client/raptorx-client/label";
@@ -50,6 +53,13 @@ public class LabelService {
     private static LabelService instance = null;
 
     private static MinaClient minaClient = null;
+
+//    static {
+//        allPrinterChangeListener.addListener((observable, oldValue, newValue) -> {
+//            //如果就调用
+//            BaseController.BC_CONTEXT.get(PrintInProcessingController.class.getName()).showResult();
+//        });
+//    }
 
     private LabelService() {
         this.loadConfig();

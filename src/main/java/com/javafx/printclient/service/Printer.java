@@ -9,6 +9,8 @@ import com.enterprisedt.net.ftp.FTPException;
 import com.enterprisedt.net.ftp.FTPTransferType;
 import com.javafx.printclient.common.Constant;
 import com.javafx.printclient.common.LabelService;
+import com.javafx.printclient.controller.BaseController;
+import com.javafx.printclient.controller.PrintInProcessingController;
 import com.javafx.printclient.httputil.HttpManager;
 import com.javafx.printclient.printstrategy.PreviewContext;
 import com.javafx.printclient.utils.FileUtil;
@@ -115,6 +117,11 @@ public class Printer {
         return statusMap.containsKey(this.status) ? (String) statusMap.get(this.status) : this.status;
     }
 
+    public String getStatusCode(){
+        return this.status;
+    }
+
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -198,7 +205,7 @@ public class Printer {
             in = new FileInputStream(xml);
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document document = db.parse(in);
-            NodeList nodeList = document.getElementsByTagName("LABELS");
+            NodeList nodeList = document.getElementsByTagName("labels");
             if (nodeList.getLength() > 0) {
                 NamedNodeMap attrs = nodeList.item(0).getAttributes();
                 String nodevalue = "";
@@ -340,7 +347,7 @@ public class Printer {
     public boolean printLabel(File label, File xml, int copies) {
         PreviewContext previewContext = new PreviewContext(FileUtil.getFileExtension(label.getName()));
         try {
-            return previewContext.executeReport(label, xml, copies,  this.osPrinterName);
+            return previewContext.executeReport(label, xml, copies, this.osPrinterName);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -812,14 +819,22 @@ public class Printer {
         }
 
         public void run() {
-            while(true) {
+            while (true) {
                 try {
                     if (this.printer.isStopThread()) {
                         return;
                     }
 
+                    for (Map.Entry<String, Printer> entry : LabelService.allPrinter.entrySet()) {
+                        if (this.printer.getPrinterName().equalsIgnoreCase(entry.getKey())) {
+                            System.out.println("打印当前线程的名字:" + entry.getKey() + ", 打印当前线程的状态:" + entry.getValue().getStatus());
+                        }
+                    }
+
                     if (this.service.isActive() && this.printer.isPrinterActive()) {
                         this.printer.setStatus("0");
+                        setAllPrinterStatus("0");
+
 
                         //todo 下载方式
 //                        if ("1".equalsIgnoreCase(Printer.this.labelService.getRemotemethod())) {
@@ -840,14 +855,14 @@ public class Printer {
                             File[] var5 = xmlFile;
                             int var4 = xmlFile.length;
 
-                            for(int var3 = 0; var3 < var4; ++var3) {
+                            for (int var3 = 0; var3 < var4; ++var3) {
                                 File eachFile = var5[var3];
 
                                 try {
                                     this.print(eachFile);
                                     Thread.sleep(1000L);
                                 } finally {
-                                    while(eachFile.exists()) {
+                                    while (eachFile.exists()) {
                                         try {
                                             log.debug("删除7");
                                             eachFile.delete();
@@ -861,12 +876,14 @@ public class Printer {
                         }
                     } else if (this.service.isActive()) {
                         this.printer.setStatus("-999");
+                        setAllPrinterStatus("-999");
                     } else {
                         this.printer.setStatus("-888");
+                        setAllPrinterStatus("-888");
                     }
 
                     try {
-                        Thread.sleep(3000L);
+                        Thread.sleep(10000L);
                     } catch (InterruptedException var15) {
                         var15.printStackTrace();
                     }
@@ -876,17 +893,29 @@ public class Printer {
             }
         }
 
+        private void setAllPrinterStatus(String status) {
+            for (Map.Entry<String, Printer> entry : LabelService.allPrinter.entrySet()) {
+                if (this.printer.getPrinterName().equalsIgnoreCase(entry.getKey())) {
+                    entry.getValue().setStatus(status);
+                    if (BaseController.BC_CONTEXT.get(PrintInProcessingController.class.getName()) != null)
+                    BaseController.BC_CONTEXT.get(PrintInProcessingController.class.getName()).showResult();
+                }
+            }
+        }
+
         public void print(File xmlFile) {
             this.printer.setStatus("1");
+            setAllPrinterStatus("1");
             if (xmlFile.exists()) {
                 this.printer.setStatus("2");
+                setAllPrinterStatus("2");
                 PrintXMLParam label = this.printer.findLabel(xmlFile);
                 if (label != null && label.labelNameJasper.trim().length() != 0) {
                     File labelFile = null;
                     try {
                         labelFile = new File(label.labelNameJasper);
                         System.out.println(label.labelNameJasper);
-                        if(labelFile == null || labelFile.length() <=0) {
+                        if (labelFile == null || labelFile.length() <= 0) {
                             labelFile = new File(label.labelNameBirt);
                             System.out.println(label.labelNameBirt);
                         }
@@ -895,26 +924,33 @@ public class Printer {
                     }
                     if (labelFile.exists()) {
                         this.printer.setStatus("3");
+                        setAllPrinterStatus("3");
                         if (this.printer.printLabel(labelFile, xmlFile, label.copies)) {
                             this.printer.setStatus("9");
+                            setAllPrinterStatus("9");
                             if (!Printer.this.backupLabel(xmlFile)) {
                                 this.printer.setStatus("-9");
+                                setAllPrinterStatus("-9");
                             }
                         } else {
                             this.printer.setStatus("-3");
+                            setAllPrinterStatus("-3");
                         }
                     } else {
                         this.printer.setStatus("-2");
+                        setAllPrinterStatus("-2");
                     }
                 } else {
                     this.printer.setStatus("-2");
+                    setAllPrinterStatus("-2");
                 }
             } else {
                 this.printer.setStatus("-1");
+                setAllPrinterStatus("-1");
             }
 
             if (this.printer.getStatusTotal().containsKey(this.printer.getStatus())) {
-                Integer cnt = (Integer)this.printer.getStatusTotal().get(this.printer.getStatus());
+                Integer cnt = (Integer) this.printer.getStatusTotal().get(this.printer.getStatus());
                 this.printer.getStatusTotal().put(this.printer.getStatus(), new Integer(cnt + 1));
             } else {
                 this.printer.getStatusTotal().put(this.printer.getStatus(), new Integer(1));

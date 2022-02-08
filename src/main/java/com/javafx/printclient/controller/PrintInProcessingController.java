@@ -2,7 +2,6 @@ package com.javafx.printclient.controller;
 
 import com.javafx.printclient.common.LabelService;
 import com.javafx.printclient.entity.InProcessingData;
-import com.javafx.printclient.entity.PrinterMachine;
 import com.javafx.printclient.service.Printer;
 import com.javafx.printclient.utils.IDCell;
 import com.jfoenix.controls.JFXTextArea;
@@ -25,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 @Component
 public class PrintInProcessingController extends BaseController implements Initializable {
@@ -52,18 +50,14 @@ public class PrintInProcessingController extends BaseController implements Initi
 //        initEvent();
     }
 
-
-    public void initData(Object data) {
-        initPagination((int)data);
-    }
-
     //    @Override
     public void showResult() {
         inProcessingDataList.clear();
+        //调用
         for (Map.Entry<String, Printer> entry :LabelService.allPrinter.entrySet()) {
             inProcessingData = new InProcessingData();
-            inProcessingData.setSerialkey(entry.getKey());
-            inProcessingData.setStatus(Printer.statusMap.get("0"));
+            inProcessingData.setPrinter(entry.getKey());
+            inProcessingData.setStatus(Printer.statusMap.get(entry.getValue().getStatusCode()));
             inProcessingData.setNote("");
             inProcessingDataList.add(inProcessingData);
         }
@@ -81,6 +75,8 @@ public class PrintInProcessingController extends BaseController implements Initi
 
     public void initView() {
 
+        inProcessingDataList.clear();
+
         pagination.setVisible(false);
 
         //确定数据导入的列 属性值要和实体类的属性对的上
@@ -95,7 +91,7 @@ public class PrintInProcessingController extends BaseController implements Initi
         for (Map.Entry<String, Printer> entry :LabelService.allPrinter.entrySet()) {
             inProcessingData = new InProcessingData();
             inProcessingData.setPrinter(entry.getKey());
-            inProcessingData.setStatus(Printer.statusMap.get("0"));
+            inProcessingData.setStatus(Printer.statusMap.get(entry.getValue().getStatusCode()));
             inProcessingData.setNote("");
             inProcessingDataList.add(inProcessingData);
         }
@@ -104,13 +100,5 @@ public class PrintInProcessingController extends BaseController implements Initi
 
 
         tableView.setItems(collect);
-    }
-
-
-    //初始化分页控件，在每次有新数据到达TableView之后
-    private void initPagination(int totalCount) {
-        pagination.setCurrentPageIndex(0);
-        //设置pagination的页数
-        pagination.setPageCount((totalCount%30) > 0 ? (totalCount/30 + 1) : totalCount/30);
     }
 }
